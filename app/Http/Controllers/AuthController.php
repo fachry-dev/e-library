@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 
-use Illuminate\suppport\Facades\Validator;
+use Illuminate\support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -32,14 +32,13 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             // Authentication passed...
             return redirect()->intended('dashboard');
-        }
-    {
-        return redirect()->back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]) ->onlyInput('email');
+        } else {
+            return redirect()->back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ])->onlyInput('email');
         }
     }
-    
+
     /**
      * Show the registration form.
      */
@@ -56,18 +55,18 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'user', // Default role is user
         ]);
 
-        Auth::login('$user');
+        Auth::login($user); // Login the newly registered user
         return redirect('dashboard');
-        return redirect()->route('login')->with('success', 'Registration successful. You can now log in.');
+        // return redirect()->route('login')->with('success', 'Registration successful. You can now log in.'); // Redundant line
     }
-   
+
     /**
      * Handle logout request.
      */

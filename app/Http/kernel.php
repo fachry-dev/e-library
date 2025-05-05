@@ -11,7 +11,7 @@ class Kernel extends HttpKernel
      * 
      * these middleware are run during every request to your application.
      * 
-     * @var array<int, class-string|string>
+     * @var array<int,class-string|string>
      */
     protected $middleware = [
         \App\Http\Middleware\TrustProxies::class,
@@ -25,7 +25,7 @@ class Kernel extends HttpKernel
     /**
      * the application's route middleware groups.
      * 
-     * @var array<string, array<int, class-string|string>
+     * @var array<string,array<int,class-string|string>
      */
     protected $middlewareGroups = [
         'web' => [

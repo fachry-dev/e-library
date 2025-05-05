@@ -38,7 +38,7 @@ class BooksController extends Controller
     }
 
     public function edit(Books $books){
-        return view('books.update', compact('books'));
+        return view('books.create', compact('books'));
     }
     public function update(Request $request, Books $books){
         $request->validasi([
