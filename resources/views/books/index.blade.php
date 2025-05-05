@@ -23,8 +23,15 @@
             <div class="w-full sm:w-64">
                 <input type="text" id="search-books" placeholder="Cari buku..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
             </div>
-            <a href="create.html" class="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">Tambah Buku</a>
+            <a href="{{ route('books.create') }}" class="w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">Tambah Buku</a>
         </div>
+        
+        @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
+        
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -37,101 +44,35 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
+                    @forelse($books as $book)
                     <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap font-medium">Harry Potter dan Batu Bertuah</td>
-                        <td class="px-6 py-4 whitespace-nowrap">Gramedia</td>
-                        <td class="px-6 py-4 hidden md:table-cell truncate max-w-xs">Buku pertama dari seri Harry Potter yang menceritakan awal petualangan Harry di Hogwarts.</td>
-                        <td class="px-6 py-4 whitespace-nowrap">1997</td>
+                        <td class="px-6 py-4 whitespace-nowrap font-medium">{{ $book->nama_buku }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $book->penerbit }}</td>
+                        <td class="px-6 py-4 hidden md:table-cell truncate max-w-xs">{{ $book->description }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $book->tahun_terbit }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <div class="flex justify-end space-x-2">
-                                <a href="show.html" class="text-gray-500 hover:text-gray-700" title="Lihat">
+                                <a href="{{ route('books.show', $book) }}" class="text-gray-500 hover:text-gray-700" title="Lihat">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="#" class="text-gray-500 hover:text-gray-700" title="Edit">
+                                <a href="{{ route('books.edit', $book) }}" class="text-gray-500 hover:text-gray-700" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <button class="text-gray-500 hover:text-red-600 delete-btn" title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                <form action="{{ route('books.destroy', $book) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus buku ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-gray-500 hover:text-red-600" title="Hapus">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap font-medium">Laskar Pelangi</td>
-                        <td class="px-6 py-4 whitespace-nowrap">Bentang Pustaka</td>
-                        <td class="px-6 py-4 hidden md:table-cell truncate max-w-xs">Novel yang menceritakan kisah persahabatan 10 anak dari Belitung yang bersekolah di SD Muhammadiyah.</td>
-                        <td class="px-6 py-4 whitespace-nowrap">2005</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div class="flex justify-end space-x-2">
-                                <a href="show.html" class="text-gray-500 hover:text-gray-700" title="Lihat">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="#" class="text-gray-500 hover:text-gray-700" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <button class="text-gray-500 hover:text-red-600 delete-btn" title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">Tidak ada data buku</td>
                     </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap font-medium">Bumi Manusia</td>
-                        <td class="px-6 py-4 whitespace-nowrap">Hasta Mitra</td>
-                        <td class="px-6 py-4 hidden md:table-cell truncate max-w-xs">Novel pertama dari tetralogi Buru karya Pramoedya Ananta Toer yang berlatar belakang masa kolonial Hindia Belanda.</td>
-                        <td class="px-6 py-4 whitespace-nowrap">1980</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div class="flex justify-end space-x-2">
-                                <a href="show.html" class="text-gray-500 hover:text-gray-700" title="Lihat">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="#" class="text-gray-500 hover:text-gray-700" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <button class="text-gray-500 hover:text-red-600 delete-btn" title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap font-medium">Filosofi Teras</td>
-                        <td class="px-6 py-4 whitespace-nowrap">Kompas</td>
-                        <td class="px-6 py-4 hidden md:table-cell truncate max-w-xs">Buku yang membahas filosofi Stoa dan bagaimana menerapkannya dalam kehidupan sehari-hari.</td>
-                        <td class="px-6 py-4 whitespace-nowrap">2018</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div class="flex justify-end space-x-2">
-                                <a href="show.html" class="text-gray-500 hover:text-gray-700" title="Lihat">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="#" class="text-gray-500 hover:text-gray-700" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <button class="text-gray-500 hover:text-red-600 delete-btn" title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap font-medium">Atomic Habits</td>
-                        <td class="px-6 py-4 whitespace-nowrap">Penguin Random House</td>
-                        <td class="px-6 py-4 hidden md:table-cell truncate max-w-xs">Buku tentang bagaimana membangun kebiasaan baik dan menghilangkan kebiasaan buruk.</td>
-                        <td class="px-6 py-4 whitespace-nowrap">2018</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div class="flex justify-end space-x-2">
-                                <a href="show.html" class="text-gray-500 hover:text-gray-700" title="Lihat">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="#" class="text-gray-500 hover:text-gray-700" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <button class="text-gray-500 hover:text-red-600 delete-btn" title="Hapus">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

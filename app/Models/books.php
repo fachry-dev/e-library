@@ -16,11 +16,11 @@ class books extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'Nama Buku',
+        'Nama_Buku',
         'Penerbit',
         'Description',
-        'Tahun Terbit',
-        'Jumlah Halaman'
+        'Tahun_Terbit',
+        'Jumlah_Halaman'
     ];
     /**
      * The attributes that should be hidden for serialization.

@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
 
- <!-- Create book content -->
- <main class="p-6">
+<!-- Create book content -->
+<main class="p-6">
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-3xl font-bold tracking-tight">Tambah Buku Baru</h2>
-        <a href="dashboard.html" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Kembali</a>
+        <a href="{{ route('books.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Kembali</a>
     </div>
 
     <div class="bg-white rounded-lg shadow overflow-hidden">
@@ -14,41 +14,47 @@
             <p class="text-sm text-gray-500">Masukkan informasi lengkap tentang buku yang akan ditambahkan</p>
         </div>
         <div class="p-5">
-            <form id="create-book-form">
+            @if ($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
+            <form action="{{ route('books.store') }}" method="POST">
+                @csrf
                 <div class="mb-5">
-                    <label for="name" class="block text-sm font-medium mb-2">Nama Buku</label>
-                    <input type="text" id="name" placeholder="Masukkan judul buku" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                    <label for="nama_buku" class="block text-sm font-medium mb-2">Nama Buku</label>
+                    <input type="text" id="nama_buku" name="nama_buku" value="{{ old('nama_buku') }}" placeholder="Masukkan judul buku" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                 </div>
 
                 <div class="mb-5">
-                    <label for="publisher" class="block text-sm font-medium mb-2">Penerbit</label>
-                    <input type="text" id="publisher" placeholder="Nama penerbit" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                    <label for="penerbit" class="block text-sm font-medium mb-2">Penerbit</label>
+                    <input type="text" id="penerbit" name="penerbit" value="{{ old('penerbit') }}" placeholder="Nama penerbit" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                 </div>
 
                 <div class="mb-5">
                     <label for="description" class="block text-sm font-medium mb-2">Deskripsi</label>
-                    <textarea id="description" placeholder="Deskripsi singkat tentang buku" rows="5" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"></textarea>
+                    <textarea id="description" name="description" placeholder="Deskripsi singkat tentang buku" rows="5" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">{{ old('description') }}</textarea>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
                     <div>
-                        <label for="year" class="block text-sm font-medium mb-2">Tahun Terbit</label>
-                        <input type="text" id="year" placeholder="Contoh: 2023" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        <label for="tahun_terbit" class="block text-sm font-medium mb-2">Tahun Terbit</label>
+                        <input type="number" id="tahun_terbit" name="tahun_terbit" value="{{ old('tahun_terbit') }}" placeholder="Contoh: 2023" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                     </div>
 
                     <div>
-                        <label for="pages" class="block text-sm font-medium mb-2">Jumlah Halaman</label>
-                        <input type="number" id="pages" placeholder="Contoh: 320" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        <label for="jumlah_halaman" class="block text-sm font-medium mb-2">Jumlah Halaman</label>
+                        <input type="number" id="jumlah_halaman" name="jumlah_halaman" value="{{ old('jumlah_halaman') }}" placeholder="Contoh: 320" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                     </div>
                 </div>
 
-                <div class="mb-5">
-                    <label for="cover" class="block text-sm font-medium mb-2">Cover Buku</label>
-                    <input type="file" id="cover" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                </div>
-
                 <div class="flex justify-end space-x-4">
-                    <a href="dashboard.html" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Batal</a>
+                    <a href="{{ route('books.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Batal</a>
                     <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700">Simpan</button>
                 </div>
             </form>
@@ -56,4 +62,3 @@
     </div>
 </main>
 @endsection
-    

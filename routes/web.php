@@ -3,23 +3,39 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Books\DashboardController;
+use App\Http\Controllers\DashboardController;
 
-// Halaman Utama (Daftar Buku)
-Route::get('/', [BooksController::class, 'index'])->name('home');
-Route::get('/buku', [BooksController::class, 'index'])->name('buku.index'); // Anda bisa memilih salah satu dari '/' atau '/buku'
-
-// Rute untuk Autentikasi
-Route::prefix('auth')->name('auth.')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
-    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register.form');
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// Auth routes - accessible to guests
+Route::middleware('guest')->group(function () {
+    // Landing page
+    Route::get('/', function () {
+        return view('auth.index');
+    })->name('auth.index');
+    
+    // Login routes
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    
+    // Registration routes
+    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
 });
 
-// Rute untuk Dashboard (jika ada halaman dashboard terpisah)
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
+// Auth protected routes
+Route::middleware('auth')->group(function () {
+    // Logout route
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Book routes
+    Route::resource('books', BooksController::class);
 
-// Rute Resource untuk Buku (CRUD operations)
-Route::resource('books', BooksController::class)->middleware('auth'); // Tambahkan middleware 'auth' jika perlu autentikasi
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    
+    // Admin only routes
+    Route::middleware('admin')->group(function () {
+        // Admin specific routes can go here
+    });
+});

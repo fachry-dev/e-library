@@ -7,19 +7,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-
-use Illuminate\support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    /**
+     * Show landing page.
+     */
+    public function index()
+    {
+        return view('auth.index');
+    }
+
     /**
      * Show the login form.
      */
     public function showLoginForm()
     {
-        return view('auth.login'); // Buat file login.blade.php di views/auth
+        return view('auth.login');
     }
 
+    /**
+     * Handle the login request.
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -27,11 +37,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->intended('dashboard');
+            return redirect()->route('dashboard');
         } else {
             return redirect()->back()->withErrors([
                 'email' => 'The provided credentials do not match our records.',
@@ -44,9 +53,12 @@ class AuthController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('auth.register'); // Buat file register.blade.php di views/auth
+        return view('auth.register');
     }
 
+    /**
+     * Handle the registration request.
+     */
     public function register(Request $request)
     {
         $request->validate([
@@ -63,8 +75,7 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user); // Login the newly registered user
-        return redirect('dashboard');
-        // return redirect()->route('login')->with('success', 'Registration successful. You can now log in.'); // Redundant line
+        return redirect()->route('dashboard.index');
     }
 
     /**
