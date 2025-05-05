@@ -20,7 +20,7 @@
                 <i class="fas fa-book w-5 h-5 mr-3"></i>
                 <span>Buku</span>
             </a>
-            <a href="create.html" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-100">
+            <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-100">
                 <i class="fas fa-plus w-5 h-5 mr-3"></i>
                 <span>Tambah Buku</span>
             </a>
@@ -35,9 +35,10 @@
         </div>
     </nav>
     <div class="p-4 border-t border-gray-200">
-        <a href="login.html" class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+        <a href="{{ route ('auth.index') }}" class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
             <i class="fas fa-sign-out-alt mr-2"></i>
             <span>Keluar</span>
         </a>
     </div>
 </aside>
+

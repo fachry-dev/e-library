@@ -2,6 +2,7 @@
 @section('content')
 
 <!-- Book detail content -->
+<div class="flex-1 md:ml-64">
 <main class="p-6">
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-3xl font-bold tracking-tight">Detail Buku</h2>
@@ -71,5 +72,5 @@
         </div>
     </div>
 </main>
-
+</div>
 @endsection
