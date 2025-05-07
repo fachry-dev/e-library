@@ -57,8 +57,11 @@
             </div>
             <div class="p-5">
                 <div class="flex justify-between items-center mb-4">
-                    <div></div>
-                    <a href="{{ route('books.create') }}" class="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">Tambah Buku</a>
+                    @if (Auth::user()->isAdmin())
+                    <a href="{{ route('books.create') }}" class="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+                        <i class="fas fa-plus"></i>
+                        Tambah Buku</a>
+                    @endif
                 </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">

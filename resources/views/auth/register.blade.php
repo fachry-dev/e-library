@@ -322,8 +322,18 @@
             <div id="register-success" class="alert alert-success">
                 Account created successfully! You can now sign in.
             </div>
+
+            @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <ul class="list-disc pl-5">
+                    @foreach ( $errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             
-            <form id="register-form" action="#" method="POST">
+            <form id="register-form" action="{{ route ('register') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="register-name" class="form-label">Full Name</label>
@@ -489,7 +499,7 @@
                         
                         // In a real app, you might redirect after a delay
                         setTimeout(() => {
-                            window.location.href = 'login.html';
+                            window.location.href = 'dashboard'; // Redirect to dashboard or login page
                         }, 3000);
                     }
                 });

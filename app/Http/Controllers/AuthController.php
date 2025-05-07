@@ -75,7 +75,7 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user); // Login the newly registered user
-        return redirect()->route('dashboard.index');
+        return redirect()->route('dashboard')->with('success', 'Registration successful! Welcome!');
     }
 
     /**

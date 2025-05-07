@@ -16,9 +16,24 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role === 'admin'){
+        // untuk mengecek apakah user sudah login
+        if (Auth::check()){
+            return redirect()->route('login');
+        }
+
+        //cek role user
+        if(Auth::user()->role ==='admin'){
             return $next($request);
         }
-        return redirect()-> route('books.index')->with('error', 'You do not have admin access.');
+
+        //untuk request AJAX/API, return status 403
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json(['message' => 'Anda tidak memiliki akses untuk operasi ini'], 403);
+        }
+
+        //Redirect dengan pesan error
+        return redirect()->route('books.index')
+        ->with('error', 'Anda tidak memiliki akses untuk halaman ini');
     }
 }
+

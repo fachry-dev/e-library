@@ -35,6 +35,8 @@ class DashboardController extends Controller
             'totalBooks' => $totalBooks,
             'totalUsers' => $totalUsers,
             'latestBooks' => $latestBooks, // Gunakan nama variabel yang baru
+
+            // return view('dashboard', )
         ]);
     }
 }
