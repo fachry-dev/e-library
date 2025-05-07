@@ -7,10 +7,21 @@
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-3xl font-bold tracking-tight">Detail Buku</h2>
         <div class="flex space-x-4">
+            @if (Auth::user()->isAdmin())
+                <a href="{{ route('books.edit'), $books }}" class="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700">edit</a>
+                
+                <form action="{{ route('books.destroy'), $books }}" method="POST" class="iniline" "return confirm('Apakah Anda yakin ingin menghapus buku ini?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">Hapus</button>
+
+                </form>
+            @endif
+
             <a href="{{ route('books.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Kembali</a>
-            <a href="{{ route('books.edit', $book) }}" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700">
+            {{-- <a href="{{ route('books.edit', $book) }}" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700">
                 <i class="fas fa-edit mr-2"></i>
-                <span>Edit</span>
+                <span>Edit</span> --}}
             </a>
         </div>
     </div>

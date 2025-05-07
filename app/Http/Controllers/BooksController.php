@@ -20,7 +20,7 @@ class BooksController extends Controller
     }
 
     public function store(Request $request){
-        $request->validasi([
+        $request->validate([
             'nama_buku' => 'required|string|max:255',
             'penerbit' => 'required|string|max:255',
             'description' => 'required|string',
@@ -42,7 +42,7 @@ class BooksController extends Controller
         return view('books.create', compact('books'));
     }
     public function update(Request $request, Books $books){
-        $request->validasi([
+        $request->validate([
             'nama_buku' => 'required|string|max:255',
             'penerbit' => 'required|string|max:255',
             'description' => 'required|string',

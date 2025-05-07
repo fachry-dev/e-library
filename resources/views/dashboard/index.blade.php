@@ -86,9 +86,15 @@
                                         <a href="{{ route('books.show', $book) }}" class="text-gray-500 hover:text-gray-700" title="Lihat">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('books.edit', $book) }}" class="text-gray-500 hover:text-gray-700" title="Edit">
+                                        <a href="{{ route('books.create', $book) }}" class="text-gray-500 hover:text-gray-700" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
+
+                                        @if (Auth::user()->isAdmin())
+                                        <a href="{{ route('books.edit', $book) }}" class="text-gray-500 hover:text-gray-700" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                            
+                                        @endif
                                         <form action="{{ route('books.destroy', $book) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus buku ini?');">
                                             @csrf
                                             @method('DELETE')

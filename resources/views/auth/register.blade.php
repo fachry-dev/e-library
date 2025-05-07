@@ -416,7 +416,7 @@
         </div>
     </div>
     
-    <script>
+    {{-- <script>
         // Toggle password visibility
         function togglePassword(inputId, button) {
             const input = document.getElementById(inputId);
@@ -546,6 +546,6 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 </body>
 </html>

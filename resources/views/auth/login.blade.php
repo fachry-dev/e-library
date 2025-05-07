@@ -378,7 +378,7 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         function togglePassword(inputId, button) {
             const input = document.getElementById(inputId);
             if (input.type === 'password') {
@@ -389,6 +389,6 @@
                 button.textContent = 'Show';
             }
         }
-    </script>
+    </script> --}}
 </body>
 </html>

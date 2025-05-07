@@ -23,14 +23,14 @@ Route::post('/logout', [AuthController::class,'logout'])->name('logout')->middle
 
 //protected routes yang memerlukan authentikasi
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('/dashboard.index', [DashboardController::class,'index'])->name('dashboard');
     Route::resource('books', BooksController::class);
 
     //daftar route untuk books
     Route::get('/books', [BooksController::class,'index'])->name('books.index');
 
     //Penting : route /books/create harus ada diatas route books/{books}
-    Route::middleware('amin')->group(function () {
+    Route::middleware('admin')->group(function () {
         Route::get('/books/create', [BooksController::class,'create'])->name('books.create');
         Route::post('/books', [BooksController::class,'store'])->name('books.store');
         Route::get('/books/{books}/edit', [BooksController::class,'edit'])->name('books.edit');
@@ -47,5 +47,5 @@ Route::redirect('/', ' /dashboard');
 
 // Fallback route
 Route::fallback(function () {
-    return response()->view('errors.404', [], 404);
+    return view('errors.404');
 });

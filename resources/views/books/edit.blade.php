@@ -14,15 +14,18 @@
             <p class="text-sm text-gray-500">Masukkan informasi lengkap tentang buku yang akan ditambahkan</p>
         </div>
         <div class="p-5">
-            <form id="create-book-form">
+            <form id="create-book-form" action="{{ route('books.edit', $books) }}" method="POST"
+                @csrf
+                @method('PUT')>
+
                 <div class="mb-5">
                     <label for="name" class="block text-sm font-medium mb-2">Nama Buku</label>
-                    <input type="text" id="name" placeholder="Masukkan judul buku" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                    <input type="text" id="name"  value="{{ old('nama_buku', $books->name) }}" placeholder="Masukkan judul buku"" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                 </div>
 
                 <div class="mb-5">
                     <label for="publisher" class="block text-sm font-medium mb-2">Penerbit</label>
-                    <input type="text" id="publisher" placeholder="Nama penerbit" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                    <input type="text" id="publisher" value="{{ old('penerbit', $books->penerbit) }}" placeholder="Nama penerbit" placeholder="Nama penerbit" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                 </div>
 
                 <div class="mb-5">
@@ -33,12 +36,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
                     <div>
                         <label for="year" class="block text-sm font-medium mb-2">Tahun Terbit</label>
-                        <input type="text" id="year" placeholder="Contoh: 2023" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        <input type="text" id="year"  value="{{ old('tahun_terbit', $books->tahun_terbit) }}" placeholder="Contoh: 2023" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                     </div>
 
                     <div>
                         <label for="pages" class="block text-sm font-medium mb-2">Jumlah Halaman</label>
-                        <input type="number" id="pages" placeholder="Contoh: 320" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        <input type="number" id="pages" value="{{ old('jumlah_halaman', $books->jumlah_halaman) }}" placeholder="Contoh: 320" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                     </div>
                 </div>
 
