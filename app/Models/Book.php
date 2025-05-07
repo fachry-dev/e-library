@@ -5,27 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class books extends Model
+class Book extends Model
 {
     use HasFactory;
 
-
     /**
-     * the attributes that are mass assignable.
+     * The attributes that are mass assignable.
      * 
      * @var array<int, string>
      */
     protected $fillable = [
-        'Nama_Buku',
-        'Penerbit',
-        'Description',
-        'Tahun_Terbit',
-        'Jumlah_Halaman'
+        'nama_buku',
+        'penerbit',
+        'description',
+        'tahun_terbit',
+        'jumlah_halaman'
     ];
+
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be cast.
      *
-     * @var array<int, string>
+     * @var array<string, string>
      */
     protected $casts = [
         'tahun_terbit' => 'integer',

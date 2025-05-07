@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book; // Gunakan singular "Book" sesuai konvensi
-use App\Models\books;
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\View\View; // Import the View class
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
@@ -25,18 +24,16 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(): View // Specify the return type
+    public function index(): View
     {
-        $totalBooks = books::count(); // Gunakan "Book"
+        $totalBooks = Book::count();
         $totalUsers = User::where('role', 'user')->count();
-        $latestBooks = Books::latest()->take(5)->get(); // Gunakan "Book" dan ganti nama variabel
+        $latestBooks = Book::latest()->take(5)->get();
 
-        return view('dashboard', [ // Gunakan array asosiatif untuk data ke view
+        return view('dashboard', [
             'totalBooks' => $totalBooks,
             'totalUsers' => $totalUsers,
-            'latestBooks' => $latestBooks, // Gunakan nama variabel yang baru
-
-            // return view('dashboard', )
+            'latestBooks' => $latestBooks,
         ]);
     }
 }

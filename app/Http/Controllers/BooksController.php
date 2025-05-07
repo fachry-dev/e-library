@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\books;
+use App\Models\Book;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
@@ -11,7 +11,7 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = books::all();
+        $books = Book::all();
         return view("books.index", compact('books'));
     }
 
@@ -28,20 +28,21 @@ class BooksController extends Controller
             'jumlah_halaman' => 'required|integer|min:1',
         ]);
 
-        Books::create($request->all());
+        Book::create($request->all());
         return redirect()->route('books.index')
         ->with('success', 'Buku berhasil ditambahkan');
         
     }
 
-    public function show(Books $books){
-        return view('books.show', compact('books'));
+    public function show(Book $book){
+        return view('books.show', compact('book'));
     }
 
-    public function edit(Books $books){
-        return view('books.create', compact('books'));
+    public function edit(Book $book){
+        return view('books.edit', compact('book'));
     }
-    public function update(Request $request, Books $books){
+    
+    public function update(Request $request, Book $book){
         $request->validate([
             'nama_buku' => 'required|string|max:255',
             'penerbit' => 'required|string|max:255',
@@ -49,13 +50,14 @@ class BooksController extends Controller
             'tahun_terbit' => 'required|integer|min:1900|max:'.date('Y'),
             'jumlah_halaman' => 'required|integer|min:1',
         ]);
-        $books->update($request->all());
+        $book->update($request->all());
 
         return redirect()->route('books.index')
         ->with('success', 'Buku berhasil diupdate');
     }
-    public function destroy(Books $books){
-        $books->delete();
+    
+    public function destroy(Book $book){
+        $book->delete();
         
         return redirect()->route('books.index')
         ->with('success', 'Buku berhasil dihapus');
