@@ -26,8 +26,7 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
-
-    /**
+ /**
      * Handle the login request.
      */
     public function login(Request $request)
@@ -37,15 +36,34 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            return redirect()->route('dashboard');
-        } else {
-            return redirect()->back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
-            ])->onlyInput('email');
+        $user = User::where('email', $request->email)->first();
+        
+        if ($user) {
+            // Cek apakah password sudah menggunakan format bcrypt (dimulai dengan $2y$)
+            if (str_starts_with($user->password, '$2y$')) {
+                // Login normal menggunakan bcrypt
+                if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                    return redirect()->route('dashboard');
+                }
+            } else {
+                // Verifikasi password lama (contoh ini mengasumsikan password disimpan tanpa hashing)
+                // Ganti ini dengan metode verifikasi yang sesuai dengan aplikasi Anda
+                $oldPasswordValid = ($request->password === $user->password); 
+                if ($oldPasswordValid) {
+                    // Update password ke bcrypt
+                    $user->password = Hash::make($request->password);
+                    $user->save();
+                    
+                    // Login user
+                    Auth::login($user);
+                    return redirect()->route('dashboard');
+                }
+            }
         }
+        
+        return redirect()->back()->withErrors([
+            'email' => 'Email atau password yang Anda masukkan tidak sesuai.',
+        ])->onlyInput('email');
     }
 
     /**
@@ -57,7 +75,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle the registration request.
+   * Handle the registration request.
      */
     public function register(Request $request)
     {
@@ -70,12 +88,12 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'user', // Default role is user
+            'password' => Hash::make($request->password), // Pastikan password di-hash dengan Bcrypt
+            'role' => 'user', // Default role adalah user
         ]);
 
-        Auth::login($user); // Login the newly registered user
-        return redirect()->route('dashboard')->with('success', 'Registration successful! Welcome!');
+        Auth::login($user); // Login pengguna yang baru mendaftar
+        return redirect()->route('dashboard')->with('success', 'Pendaftaran berhasil! Selamat datang!');
     }
 
     /**
@@ -89,6 +107,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/'); // Redirect to home or login page
+        return redirect('/'); // Redirect ke home atau login page
     }
 }
