@@ -30,7 +30,7 @@ class DashboardController extends Controller
         $totalUsers = User::where('role', 'user')->count();
         $latestBooks = Book::latest()->take(5)->get();
 
-        return view('dashboard', [
+        return view('dashboard.index', [
             'totalBooks' => $totalBooks,
             'totalUsers' => $totalUsers,
             'latestBooks' => $latestBooks,

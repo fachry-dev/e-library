@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+
 use App\Http\Middleware\Authenticate;
 
 //Auth routes
@@ -19,7 +20,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 //protected routes yang memerlukan authentikasi
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     
     //daftar route untuk books
     Route::get('/books', [BooksController::class, 'index'])->name('books.index');
@@ -37,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{book}', [BooksController::class, 'show'])->name('books.show');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 // Fallback route
 Route::fallback(function () {

@@ -7,7 +7,7 @@
             <p class="text-[#1d1d1d]">
                 {{ Auth::user()->name }}
                 @if(Auth::user()->isAdmin())
-                <span class="text-xs text-primary-600">(Admin)</span>
+                <span class="text-xs text-primary-600">()</span>
                 @endif
             </p>
         </button>

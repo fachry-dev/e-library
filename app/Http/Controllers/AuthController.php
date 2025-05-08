@@ -43,7 +43,7 @@ class AuthController extends Controller
             if (str_starts_with($user->password, '$2y$')) {
                 // Login normal menggunakan bcrypt
                 if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                    return redirect()->route('dashboard');
+                    return redirect()->route('dashboard.index');
                 }
             } else {
                 // Verifikasi password lama (contoh ini mengasumsikan password disimpan tanpa hashing)
@@ -56,7 +56,7 @@ class AuthController extends Controller
                     
                     // Login user
                     Auth::login($user);
-                    return redirect()->route('dashboard');
+                    return redirect()->route('dashboard.index');
                 }
             }
         }
