@@ -25,7 +25,7 @@
                 <div class="text-2xl font-bold">{{ $totalUsers }}</div>
                 <div class="text-xs text-gray-500">Jumlah pengguna terdaftar</div>
             </div>
-            {{-- <div class="bg-white p-5 rounded-lg shadow">
+            <div class="bg-white p-5 rounded-lg shadow">
                 <div class="flex items-center justify-between mb-2">
                     <div class="text-sm font-medium text-gray-500">Administrasi</div>
                     <i class="fas fa-cog text-gray-400"></i>
@@ -38,7 +38,7 @@
                     @endif
                 </div>
                 <div class="text-xs text-gray-500">Level akses akun Anda</div>
-            </div> --}}
+            </div>
             <div class="bg-white p-5 rounded-lg shadow">
                 <div class="flex items-center justify-between mb-2">
                     <div class="text-sm font-medium text-gray-500">Kategori</div>
@@ -86,9 +86,7 @@
                                         <a href="{{ route('books.show', $book) }}" class="text-gray-500 hover:text-gray-700" title="Lihat">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('books.create', $book) }}" class="text-gray-500 hover:text-gray-700" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                        
 
                                         @if (Auth::user()->isAdmin())
                                         <a href="{{ route('books.edit', $book) }}" class="text-gray-500 hover:text-gray-700" title="Edit">

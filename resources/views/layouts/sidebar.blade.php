@@ -20,9 +20,10 @@
                 <i class="fas fa-book w-5 h-5 mr-3"></i>
                 <span>Buku</span>
             </a>
-            <a href="{{ route('books.create') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ Request::routeIs('books.create') ? 'bg-primary-600 text-white' : 'text-gray-700 hover:bg-gray-100' }}">
+            <a href="{{ route('/books.create') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ Request::routeIs('/books.create') ? 'bg-primary-600 text-white' : 'text-gray-700 hover:bg-gray-100' }}">
                 <i class="fas fa-plus w-5 h-5 mr-3"></i>
                 <span>Tambah Buku</span>
+            </a>
             </a>
             @if(Auth::user()->isAdmin())
             <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-100">

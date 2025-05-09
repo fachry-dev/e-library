@@ -36,5 +36,6 @@ class AdminMiddleware
         return redirect()->route('books.index')
         ->with('error', 'Anda tidak memiliki akses untuk halaman ini');
     }
+    
 }
 

@@ -36,52 +36,44 @@
 </head>
 <body class="bg-gray-50">
 
-    <div class="main-container">
-        <!-- Sidebar -->
+    <div class="main-container flex">
         @include('layouts.sidebar')
-        <!-- End Sidebar -->
-        
-        <div class="main-content min-h-screen">
-            <!-- Header -->
-            @include('layouts.header')
-            <!-- End Header -->
-
-            <!-- Main Content -->
-            <main>
-                @yield('content')            
-                <!-- End Main Content -->
-            </main>
+        <div class="main-content flex-1 ml-0 sm:ml-64 min-h-screen">
+            <header class="bg-white shadow lg:px-8">
+                @include('layouts.header')
+            </header>
+            <main class="p-4 sm:p-6 lg:p-8">
+                @yield('content')
+                </main>
         </div>
-        <!-- Main Content -->
-    </div>
+        </div>
 
     <script>
         // Mobile menu toggle
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const sidebar = document.getElementById('sidebar');
             const closeSidebar = document.getElementById('close-sidebar');
-            
+
             if (mobileMenuButton && sidebar && closeSidebar) {
                 mobileMenuButton.addEventListener('click', function() {
                     sidebar.classList.remove('-translate-x-full');
                 });
-                
+
                 closeSidebar.addEventListener('click', function() {
                     sidebar.classList.add('-translate-x-full');
                 });
             }
-            
+
             // User dropdown toggle
             const userMenuButton = document.getElementById('user-menu-button');
             const userDropdown = document.getElementById('user-dropdown');
-            
+
             if (userMenuButton && userDropdown) {
                 userMenuButton.addEventListener('click', function() {
                     userDropdown.classList.toggle('hidden');
                 });
-                
+
                 // Close dropdown when clicking outside
                 document.addEventListener('click', function(event) {
                     if (!event.target.closest('#user-menu-button') && !event.target.closest('#user-dropdown')) {
@@ -89,7 +81,7 @@
                     }
                 });
             }
-            
+
             // Form submission for delete buttons
             const deleteButtons = document.querySelectorAll('.delete-btn');
             deleteButtons.forEach(button => {

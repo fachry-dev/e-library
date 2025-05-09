@@ -21,13 +21,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 //protected routes yang memerlukan authentikasi
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    
+
     //daftar route untuk books
     Route::get('/books', [BooksController::class, 'index'])->name('books.index');
 
     //Penting : route /books/create harus ada diatas route books/{books}
     Route::middleware('admin')->group(function () {
-        Route::get('/books/create', [BooksController::class, 'create'])->name('books.create');
+        Route::get('books/create', [BooksController::class, 'create'])->name('books.create');
         Route::post('/books', [BooksController::class, 'store'])->name('books.store');
         Route::get('/books/{book}/edit', [BooksController::class, 'edit'])->name('books.edit');
         Route::put('/books/{book}', [BooksController::class, 'update'])->name('books.update');
